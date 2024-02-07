@@ -1,10 +1,16 @@
 const mongoose = require("mongoose");
-const MONGO_URI =
-  "mongodb+srv://tx00-web:TX00%23web%2323@cluster0.1x4ks.mongodb.net/2023-11-17";
+require('dotenv').config(); // Load environment variables from .env
+
+const MONGO_URI = process.env.MONGO_URI; // Access the database URI from .env
 
 const connectDB = async () => {
-  const conn = await mongoose.connect(MONGO_URI);
-  console.log(`Connected to database`);
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
 };
 
 module.exports = connectDB;
